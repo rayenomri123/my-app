@@ -1,12 +1,13 @@
 {
   "name": "my-app",
   "description": "A little Electron demo that shows Chrome/Node/Electron versions and a counter",
-  "author":    "Rayen Omri rayenomri23p@gmail.com@example.com",
+  "author": "Rayen Omri <rayenomri23p@gmail.com>",
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder --publish never"
+    "dist": "electron-builder",
+    "publish": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.rayenomri.myapp",
@@ -19,18 +20,25 @@
       "node_modules/**/*"
     ],
     "directories": {
-      "buildResources": "assets",  
+      "buildResources": "assets",
       "output": "dist"
     },
     "win": {
-      "target": [ "nsis", "zip" ]
+      "target": ["nsis", "zip"]
     },
     "mac": {
-      "target": [ "dmg", "zip" ]
+      "target": ["dmg", "zip"]
     },
     "linux": {
-      "target": [ "AppImage", "deb" ]
-    }
+      "target": ["AppImage", "deb"]
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "rayenomri123",
+        "repo": "my-app"
+      }
+    ]
   },
   "devDependencies": {
     "electron": "^36.1.0",

@@ -1,35 +1,58 @@
-const { app, BrowserWindow, ipcMain } = require('electron/main')
+const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require("electron-updater");
-const path = require('node:path')
+const path = require('node:path');
+const log = require("electron-log");
 
-const createWindow = () => {
-  const win = new BrowserWindow({
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false
     }
-  })
-  win.loadFile('index.html')
+  });
+
+  mainWindow.loadFile('index.html');
 }
+
+// Setup logger for autoUpdater
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info";
+
 app.whenReady().then(() => {
   createWindow();
 
-  // Check for updates and notify the user if one is available
+  // Check for updates and notify user
   autoUpdater.checkForUpdatesAndNotify();
 
-  // (Optional) log update events
+  // Notify renderer (optional)
   autoUpdater.on('update-available', () => {
-    console.log('Update available—downloading in background');
+    log.info('Update available—downloading...');
+    if (mainWindow) {
+      mainWindow.webContents.send('update_available');
+    }
   });
+
   autoUpdater.on('update-downloaded', () => {
-    console.log('Update downloaded; will install on quit');
+    log.info('Update downloaded—installing...');
+    if (mainWindow) {
+      mainWindow.webContents.send('update_downloaded');
+    }
+
+    // Automatically quit and install after short delay
+    setTimeout(() => {
+      autoUpdater.quitAndInstall();
+    }, 3000);
   });
 });
 
+// Handle quit
 app.on('window-all-closed', () => {
-  // On Windows & Linux, quit then install if update ready
   if (process.platform !== 'darwin') {
-    autoUpdater.quitAndInstall(false, true);
+    app.quit();
   }
 });

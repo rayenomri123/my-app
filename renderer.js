@@ -16,3 +16,14 @@ incrementBtn.addEventListener('click', () => {
   count += 2;
   countDisplay.innerText = count;
 });
+
+
+const { ipcRenderer } = require('electron');
+
+ipcRenderer.on('update_available', () => {
+  alert('A new update is available. Downloading now...');
+});
+
+ipcRenderer.on('update_downloaded', () => {
+  alert('Update downloaded. App will restart to install.');
+});

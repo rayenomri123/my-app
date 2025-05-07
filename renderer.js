@@ -13,6 +13,6 @@ const countDisplay = document.getElementById('count');
 const incrementBtn = document.getElementById('incrementBtn');
 
 incrementBtn.addEventListener('click', () => {
-  count++;
+  count += 2;
   countDisplay.innerText = count;
 });

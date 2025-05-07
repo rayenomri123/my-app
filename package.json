@@ -24,13 +24,22 @@
       "output": "dist"
     },
     "win": {
-      "target": ["nsis", "zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     },
     "mac": {
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "publish": [
       {
@@ -43,5 +52,8 @@
   "devDependencies": {
     "electron": "^36.1.0",
     "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
   }
 }

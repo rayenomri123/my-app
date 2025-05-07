@@ -2,7 +2,7 @@
   "name": "my-app",
   "description": "A little Electron demo that shows Chrome/Node/Electron versions and a counter",
   "author": "Rayen Omri <rayenomri23p@gmail.com>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -55,6 +55,7 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
+    "electron-log": "^5.4.0",
     "electron-updater": "^6.6.2"
   }
 }

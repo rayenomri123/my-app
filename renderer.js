@@ -13,7 +13,7 @@ const countDisplay = document.getElementById('count');
 const incrementBtn = document.getElementById('incrementBtn');
 
 incrementBtn.addEventListener('click', () => {
-  count += 2;
+  count += 4;
   countDisplay.innerText = count;
 });
 
